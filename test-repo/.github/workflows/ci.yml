@@ -1,0 +1,26 @@
+name: Terraform CI
+
+on:
+  pull_request:
+    branches:
+      - main  # Adjust to your default branch
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.4.0  # Specify the Terraform version
+
+      - name: Terraform fmt (check)
+        run: terraform fmt -check -diff
+
+      - name: Terraform Init
+        run: terraform init
+        
